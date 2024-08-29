@@ -1,10 +1,13 @@
 use {
   super::*,
   clap::{
-    builder::{styling::AnsiColor, FalseyValueParser, Styles},
+    builder::{styling::AnsiColor, ArgExt, FalseyValueParser, Styles},
     parser::ValuesRef,
     value_parser, Arg, ArgAction, ArgGroup, ArgMatches, Command,
   },
+  clap_complete::{
+    engine::{ArgValueCompleter, CompletionCandidate},
+  }
 };
 
 #[derive(Debug, PartialEq)]
@@ -521,6 +524,7 @@ impl Config {
           .num_args(1..)
           .action(ArgAction::Append)
           .help("Overrides and recipe(s) to run, defaulting to the first recipe in the justfile"),
+          .add(ArgValueCandidates::new())
       )
   }
 
